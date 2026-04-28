@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { collection, query, orderBy, onSnapshot, limit } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType, logout } from '../lib/firebase';
 import { LeadRow } from './LeadRow';
-import { LogOut, Users, RefreshCw, Search, Bell, BellOff, Info, X, Phone, FileDown } from 'lucide-react';
+import { LogOut, Users, RefreshCw, Search, Bell, BellOff, Info, X, Phone, FileDown, Baby, HeartPulse, Stethoscope, CalendarClock } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export function Dashboard() {
@@ -150,8 +150,24 @@ export function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Header */}
+    <div className="min-h-screen bg-gray-50 flex flex-col relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        {/* Subtle Brand Elements */}
+        <div className="absolute top-20 left-10 w-96 h-96 bg-[url('https://images.unsplash.com/photo-1544126592-807daa2e5682?auto=format&fit=crop&q=80&w=1000')] bg-cover rounded-full opacity-10 border-8 border-white shadow-2xl rotate-3" />
+        <div className="absolute top-1/2 right-10 w-80 h-80 bg-[url('https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?auto=format&fit=crop&q=80&w=1000')] bg-cover rounded-full opacity-10 border-8 border-white shadow-2xl -rotate-6" />
+        
+        {/* Floating Large Icons Watermarks */}
+        <div className="absolute top-[15%] right-[25%] opacity-5 text-gray-900 border-2 border-gray-900/10 p-6 rounded-[3rem] -rotate-12"><Baby size={120} strokeWidth={1} /></div>
+        <div className="absolute bottom-[20%] left-[15%] opacity-5 text-brand-blue border-2 border-brand-blue/10 p-6 rounded-[3rem] rotate-12"><HeartPulse size={100} strokeWidth={1} /></div>
+        <div className="absolute top-[40%] left-[30%] opacity-5 text-gray-900 border-2 border-gray-900/10 p-6 rounded-[3rem] rotate-45"><Stethoscope size={80} strokeWidth={1} /></div>
+        <div className="absolute bottom-[10%] right-[20%] opacity-5 text-brand-blue border-2 border-brand-blue/10 p-4 rounded-[3rem] -rotate-6"><CalendarClock size={90} strokeWidth={1} /></div>
+
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-[500px] h-32 bg-brand-blue/20 rounded-full blur-3xl opacity-50" />
+      </div>
+
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Header */}
       <header className="bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex flex-wrap justify-between items-center sticky top-0 z-20">
         <div className="flex items-center gap-3">
           <div className="bg-brand-blue p-2 rounded-xl text-gray-900">
@@ -274,62 +290,72 @@ export function Dashboard() {
             />
           </div>
           
-          <div className="flex flex-wrap items-center gap-3 w-full xl:w-auto">
-            <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-1.5 grow sm:grow-0">
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Status</span>
-              <select 
-                className="bg-transparent text-sm font-bold text-gray-700 outline-none"
-                value={filter}
-                onChange={e => setFilter(e.target.value)}
-              >
-                <option value="todos">Todos</option>
-                <option value="novo">Novo</option>
-                <option value="em_contato">Em Contato</option>
-                <option value="concluido">Concluído</option>
-                <option value="arquivado">Arquivado</option>
-                <option value="reminders">Agendados</option>
-              </select>
+          <div className="flex flex-wrap items-center gap-4 w-full xl:w-auto">
+            <div className="flex flex-col gap-1 grow sm:grow-0">
+              <span className="text-[10px] font-medium text-gray-400 uppercase tracking-tight ml-2">Status</span>
+              <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-2.5 shadow-sm focus-within:border-brand-blue/50 transition-colors">
+                <select 
+                  className="bg-transparent text-sm font-bold text-gray-700 outline-none w-full cursor-pointer"
+                  value={filter}
+                  onChange={e => setFilter(e.target.value)}
+                >
+                  <option value="todos">Todos</option>
+                  <option value="novo">Novo</option>
+                  <option value="em_contato">Em Contato</option>
+                  <option value="concluido">Concluído</option>
+                  <option value="arquivado">Arquivado</option>
+                  <option value="reminders">Agendados</option>
+                </select>
+              </div>
             </div>
 
-            <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-1.5 grow sm:grow-0">
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Origem</span>
-              <select 
-                className="bg-transparent text-sm font-bold text-gray-700 outline-none"
-                value={sourceFilter}
-                onChange={e => setSourceFilter(e.target.value)}
-              >
-                <option value="todos">Todos</option>
-                <option value="website">Website</option>
-                <option value="instagram">Instagram</option>
-                <option value="social_media">Redes Sociais</option>
-                <option value="referral">Indicação</option>
-                <option value="google">Google</option>
-                <option value="outro">Outro</option>
-              </select>
+            <div className="flex flex-col gap-1 grow sm:grow-0">
+              <span className="text-[10px] font-medium text-gray-400 uppercase tracking-tight ml-2">Origem</span>
+              <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-2.5 shadow-sm focus-within:border-brand-blue/50 transition-colors">
+                <select 
+                  className="bg-transparent text-sm font-bold text-gray-700 outline-none w-full cursor-pointer"
+                  value={sourceFilter}
+                  onChange={e => setSourceFilter(e.target.value)}
+                >
+                  <option value="todos">Todos</option>
+                  <option value="website">Website</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="social_media">Redes Sociais</option>
+                  <option value="referral">Indicação</option>
+                  <option value="google">Google</option>
+                  <option value="outro">Outro</option>
+                </select>
+              </div>
             </div>
 
-            <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-1.5 grow sm:grow-0">
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">De</span>
-              <input 
-                type="date" 
-                className="bg-transparent text-sm font-bold text-gray-700 outline-none"
-                value={startDate}
-                onChange={e => setStartDate(e.target.value)}
-              />
+            <div className="flex flex-col gap-1 grow sm:grow-0">
+              <span className="text-[10px] font-medium text-gray-400 uppercase tracking-tight ml-2">De</span>
+              <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-2.5 shadow-sm focus-within:border-brand-blue/50 transition-colors">
+                <input 
+                  type="date" 
+                  className="bg-transparent text-sm font-bold text-gray-700 outline-none cursor-pointer"
+                  value={startDate}
+                  onChange={e => setStartDate(e.target.value)}
+                />
+              </div>
             </div>
-            <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-1.5 grow sm:grow-0">
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Até</span>
-              <input 
-                type="date" 
-                className="bg-transparent text-sm font-bold text-gray-700 outline-none"
-                value={endDate}
-                onChange={e => setEndDate(e.target.value)}
-              />
+
+            <div className="flex flex-col gap-1 grow sm:grow-0">
+              <span className="text-[10px] font-medium text-gray-400 uppercase tracking-tight ml-2">Até</span>
+              <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-2.5 shadow-sm focus-within:border-brand-blue/50 transition-colors">
+                <input 
+                  type="date" 
+                  className="bg-transparent text-sm font-bold text-gray-700 outline-none cursor-pointer"
+                  value={endDate}
+                  onChange={e => setEndDate(e.target.value)}
+                />
+              </div>
             </div>
+            
             {(startDate || endDate) && (
               <button 
                 onClick={() => { setStartDate(''); setEndDate(''); }}
-                className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                className="mt-4 p-2 text-red-500 hover:bg-red-50 rounded-xl transition-all self-center"
                 title="Limpar datas"
               >
                 <X size={18} />
@@ -407,6 +433,7 @@ export function Dashboard() {
           </div>
         )}
       </main>
+      </div>
     </div>
   );
 }
