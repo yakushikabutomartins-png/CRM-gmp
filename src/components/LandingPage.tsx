@@ -67,13 +67,39 @@ export function LandingPage() {
   const [copied, setCopied] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [detectedSource, setDetectedSource] = useState('website');
 
   const WHATSAPP_NUMBER = "5573999350209";
-  const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+  const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}`;
 
-  const handleWhatsAppRedirect = () => {
-    // Redireciona o usuário diretamente para o WhatsApp
-    window.location.href = WHATSAPP_URL;
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const src = params.get('src') || params.get('utm_source');
+    
+    if (src === 'instagram') {
+      setDetectedSource('instagram');
+    } else if (src === 'google') {
+      setDetectedSource('google');
+    } else {
+      setDetectedSource('website');
+    }
+  }, []);
+
+  const handleWhatsAppRedirect = (data: { name: string, benefitType: string }) => {
+    const sourceName = detectedSource === 'instagram' ? 'Instagram' : 'Site';
+    const message = encodeURIComponent(`Olá! Meu nome é ${data.name}. Vi o ${sourceName} da Consultoria AML e gostaria de uma análise para o benefício: ${data.benefitType}. Pode me ajudar a saber se tenho direito?`);
+    
+    // wa.me é o padrão recomendado para links diretos que funcionam bem em mobile e desktop
+    const finalUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+
+    // Tenta abrir em nova aba para não perder o site de fundo
+    const win = window.open(finalUrl, '_blank', 'noopener,noreferrer');
+    
+    if (!win) {
+      // Se o popup for bloqueado (comum em alguns navegadores mobile), redireciona na mesma aba
+      window.location.assign(finalUrl);
+    }
+    
     setShowWhatsAppModal(false);
   };
 
@@ -111,7 +137,7 @@ export function LandingPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const shareUrl = "https://ai.studio/apps/551fb28b-7388-4f15-b541-6e6336f3a365";
+  const shareUrl = window.location.origin + window.location.pathname;
   const shareText = "Garanta seu benefício do INSS com a Consultoria AML. Análise gratuita e sem taxas antecipadas com Adilson Macrina!";
 
   const copyToClipboard = () => {
@@ -164,7 +190,7 @@ export function LandingPage() {
                 onSuccess={handleWhatsAppRedirect} 
                 title="Falar no WhatsApp" 
                 buttonText="INICIAR CONVERSA" 
-                source="whatsapp"
+                source={detectedSource === 'website' ? 'whatsapp' : detectedSource}
               />
             </motion.div>
           </div>
@@ -301,8 +327,13 @@ export function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-8"
           >
-            <div className="inline-flex items-center gap-2 bg-orange-50 text-orange-700 px-4 py-2 rounded-full font-bold text-xs uppercase tracking-widest border border-orange-100">
-              <Star size={14} className="fill-current" /> Atendimento Humanizado e Seguro
+            <div className="flex flex-wrap gap-2">
+              <div className="inline-flex items-center gap-2 bg-orange-50 text-orange-700 px-4 py-2 rounded-full font-bold text-xs uppercase tracking-widest border border-orange-100">
+                <Star size={14} className="fill-current" /> Atendimento Humanizado e Seguro
+              </div>
+              <div className="inline-flex items-center gap-2 bg-brand-blue/10 text-brand-blue px-4 py-2 rounded-full font-bold text-xs uppercase tracking-widest border border-brand-blue/20">
+                <CheckCircle2 size={14} /> Atendemos em todo o Brasil
+              </div>
             </div>
             
             <h1 className="text-4xl md:text-7xl font-black text-gray-900 leading-[1] md:leading-[0.95] tracking-tighter">
@@ -332,7 +363,7 @@ export function LandingPage() {
             className="relative"
           >
             <div className="absolute -inset-4 bg-blue-100/30 rounded-[3rem] blur-2xl -z-10" />
-            <LeadForm />
+            <LeadForm source={detectedSource} />
             
             {/* Share Trigger */}
             <div className="absolute -bottom-6 left-12 right-12 flex justify-center">
@@ -614,6 +645,9 @@ export function LandingPage() {
             <div className="flex flex-col items-center md:items-start">
               <Logo className="scale-75 origin-left" />
               <span className="font-black text-xl text-gray-900 uppercase mt-4">Consultoria<span className="text-brand-blue">AML</span></span>
+              <div className="mt-2 inline-flex items-center gap-2 bg-brand-blue/5 text-brand-blue px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-brand-blue/10">
+                <CheckCircle2 size={10} /> Atendemos em todo o Brasil
+              </div>
             </div>
             <p className="text-gray-400 text-sm font-medium">Adilson Macrina Levado - Especialista em Benefícios Previdenciários.</p>
             <div className="flex justify-center md:justify-start gap-4">

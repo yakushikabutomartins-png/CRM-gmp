@@ -20,7 +20,7 @@ export function LeadForm({
   buttonText = "CONSULTAR AGORA",
   source = "website" 
 }: { 
-  onSuccess?: () => void, 
+  onSuccess?: (data: { name: string, benefitType: string }) => void, 
   title?: string, 
   buttonText?: string,
   source?: string
@@ -50,7 +50,7 @@ export function LeadForm({
       if (onSuccess) {
         setStatus('redirecting');
         setTimeout(() => {
-          onSuccess();
+          onSuccess({ name: formData.name, benefitType: formData.benefitType });
         }, 1500);
       } else {
         setStatus('success');
@@ -104,8 +104,16 @@ export function LeadForm({
         <p className="text-gray-600 mb-8 text-lg leading-relaxed">
           Estamos te redirecionando para o WhatsApp do especialista agora mesmo...
         </p>
-        <div className="flex items-center justify-center gap-2 text-brand-blue font-black uppercase tracking-tighter animate-pulse">
-           Conectando ao WhatsApp
+        <div className="space-y-4">
+          <div className="flex items-center justify-center gap-2 text-brand-blue font-black uppercase tracking-tighter animate-pulse">
+            Conectando ao WhatsApp
+          </div>
+          <button 
+            onClick={() => onSuccess && onSuccess({ name: formData.name, benefitType: formData.benefitType })}
+            className="text-xs text-gray-400 underline hover:text-brand-blue transition-colors"
+          >
+            Se não for redirecionado, clique aqui
+          </button>
         </div>
       </motion.div>
     );

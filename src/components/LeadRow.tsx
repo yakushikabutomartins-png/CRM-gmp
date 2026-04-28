@@ -199,6 +199,7 @@ export function LeadRow({ lead }: LeadProps) {
                       onChange={e => setSource(e.target.value)}
                     >
                       <option value="website">Website</option>
+                      <option value="instagram">Instagram</option>
                       <option value="social_media">Redes Sociais</option>
                       <option value="referral">Indicação</option>
                       <option value="google">Google</option>

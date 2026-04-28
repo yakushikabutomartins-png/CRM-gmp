@@ -83,8 +83,10 @@ export function Dashboard() {
   }, [permission]);
 
   const filteredLeads = leads.filter(lead => {
-    const matchesSearch = lead.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          lead.benefitType.toLowerCase().includes(searchTerm.toLowerCase());
+    const searchTermLower = searchTerm.toLowerCase();
+    const matchesSearch = lead.name.toLowerCase().includes(searchTermLower) || 
+                          lead.benefitType.toLowerCase().includes(searchTermLower) ||
+                          (lead.notes || '').toLowerCase().includes(searchTermLower);
     
     const matchesPhone = !phoneSearch || lead.phone.includes(phoneSearch);
     
@@ -242,7 +244,7 @@ export function Dashboard() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <input 
               type="text" 
-              placeholder="Buscar por nome ou benefício..."
+              placeholder="Buscar por nome, benefício ou notas..."
               className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
@@ -274,6 +276,39 @@ export function Dashboard() {
           
           <div className="flex flex-wrap items-center gap-3 w-full xl:w-auto">
             <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-1.5 grow sm:grow-0">
+              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Status</span>
+              <select 
+                className="bg-transparent text-sm font-bold text-gray-700 outline-none"
+                value={filter}
+                onChange={e => setFilter(e.target.value)}
+              >
+                <option value="todos">Todos</option>
+                <option value="novo">Novo</option>
+                <option value="em_contato">Em Contato</option>
+                <option value="concluido">Concluído</option>
+                <option value="arquivado">Arquivado</option>
+                <option value="reminders">Agendados</option>
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-1.5 grow sm:grow-0">
+              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Origem</span>
+              <select 
+                className="bg-transparent text-sm font-bold text-gray-700 outline-none"
+                value={sourceFilter}
+                onChange={e => setSourceFilter(e.target.value)}
+              >
+                <option value="todos">Todos</option>
+                <option value="website">Website</option>
+                <option value="instagram">Instagram</option>
+                <option value="social_media">Redes Sociais</option>
+                <option value="referral">Indicação</option>
+                <option value="google">Google</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-1.5 grow sm:grow-0">
               <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">De</span>
               <input 
                 type="date" 
@@ -300,39 +335,6 @@ export function Dashboard() {
                 <X size={18} />
               </button>
             )}
-            <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-1.5 grow sm:grow-0">
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Origem</span>
-              <select 
-                className="bg-transparent text-sm font-bold text-gray-700 outline-none"
-                value={sourceFilter}
-                onChange={e => setSourceFilter(e.target.value)}
-              >
-                <option value="todos">Todos</option>
-                <option value="website">Website</option>
-                <option value="social_media">Redes Sociais</option>
-                <option value="referral">Indicação</option>
-                <option value="google">Google</option>
-                <option value="outro">Outro</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="flex gap-2 overflow-x-auto pb-2 xl:pb-0 scrollbar-hide w-full xl:w-auto">
-            {['todos', 'novo', 'em_contato', 'concluido', 'arquivado', 'reminders'].map(f => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`px-4 py-3 rounded-2xl whitespace-nowrap font-bold text-sm transition-all border ${
-                  filter === f 
-                  ? 'bg-gray-900 text-white border-gray-900 shadow-lg shadow-gray-200' 
-                  : 'bg-white text-gray-500 border-gray-200 hover:border-brand-blue'
-                }`}
-              >
-                {f === 'todos' ? 'Todos' : 
-                 f === 'reminders' ? 'Agendados' :
-                 f.replace('_', ' ').charAt(0).toUpperCase() + f.replace('_', ' ').slice(1)}
-              </button>
-            ))}
           </div>
         </div>
 

@@ -32,7 +32,7 @@ service cloud.firestore {
         && data.phone is string && data.phone.size() >= 8 && data.phone.size() <= 20
         && data.benefitType is string && data.benefitType.size() > 0 && data.benefitType.size() <= 100
         && data.status in ['novo', 'em_contato', 'concluido', 'arquivado']
-        && (data.get('source', 'website') in ['website', 'social_media', 'referral', 'google', 'outro'])
+        && (data.get('source', 'website') in ['website', 'social_media', 'referral', 'google', 'outro', 'whatsapp', 'instagram'])
         && data.createdAt == request.time
         && data.updatedAt == request.time;
     }
