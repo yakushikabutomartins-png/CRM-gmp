@@ -113,8 +113,14 @@ export function LeadRow({ lead }: LeadProps) {
           </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
-          <div className="text-sm font-bold text-gray-900">{lead.name}</div>
-          <div className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">{lead.source}</div>
+          <div className="flex items-center gap-3">
+            <div className="flex flex-col">
+              <div className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                {lead.name}
+              </div>
+              <div className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">{lead.source}</div>
+            </div>
+          </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-600">
           {lead.phone}

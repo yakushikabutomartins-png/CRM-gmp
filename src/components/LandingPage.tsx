@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { LeadForm } from './LeadForm';
-import { Heart, ShieldCheck, CheckCircle2, MessageCircle, ArrowRight, Star, Clock, Lock, HelpingHand, ChevronDown, Share2, Facebook, Twitter, Link, X, Check, ChevronUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, ShieldCheck, CheckCircle2, MessageCircle, ArrowRight, Star, Clock, Lock, HelpingHand, ChevronDown, Share2, Facebook, Twitter, Link, X, Check, ChevronUp, ChevronLeft, ChevronRight, Baby, GraduationCap, Stethoscope } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const TESTIMONIALS = [
@@ -56,8 +56,70 @@ const Logo = ({ className = "" }: { className?: string }) => (
       <div className="absolute inset-1 border-[3px] border-gray-900 rounded-full border-b-transparent rotate-45"></div>
       <span className="text-xl font-black text-gray-900 tracking-tighter">AML</span>
     </div>
-    <div className="text-[7px] font-black tracking-[0.2em] text-brand-blue uppercase mt-1">Pelos que mais precisam</div>
+    <div className="text-[7px] font-black tracking-[0.2em] text-brand-blue uppercase mt-1">PELOS QUE MAIS PRECISAM</div>
   </div>
+);
+
+const PromotionalBanner = ({ onCtaClick }: { onCtaClick: () => void }) => (
+  <section className="py-12 px-4">
+    <div className="max-w-7xl mx-auto">
+      <div className="relative bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-gray-100 flex flex-col md:flex-row items-stretch">
+        <div className="flex-1 p-10 md:p-16 flex flex-col justify-center space-y-8 relative z-10 bg-linear-to-br from-white to-blue-50/30">
+          <div className="space-y-2">
+            <h3 className="text-3xl md:text-5xl font-black text-gray-900 leading-none tracking-tight">
+              MÃES TÊM DIREITO AOS <br/>
+              <span className="text-brand-blue">BENEFÍCIOS DO INSS</span>
+            </h3>
+            <div className="inline-block bg-brand-pink text-gray-900 px-6 py-2 rounded-2xl font-black text-xl md:text-3xl mt-4 uppercase shadow-lg shadow-pink-200/50">
+              AUXÍLIO-MATERNIDADE
+            </div>
+          </div>
+          
+          <p className="text-lg text-gray-600 font-bold max-w-md italic">
+            Você que trabalhou de <span className="text-gray-900">carteira assinada</span>, que nunca trabalhou ou trabalha na <span className="text-brand-blue">Zona Rural</span>.
+          </p>
+
+          <div className="flex flex-wrap gap-6 pt-4">
+            <div className="flex flex-col items-center gap-2 text-center">
+              <div className="p-3 bg-blue-50 text-brand-blue rounded-2xl shadow-sm border border-blue-100"><Baby size={32} /></div>
+              <span className="text-[9px] font-black uppercase text-gray-400 tracking-widest max-w-[80px]">Salário Maternidade</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 text-center">
+              <div className="p-3 bg-blue-50 text-gray-900 rounded-2xl shadow-sm border border-gray-100"><GraduationCap size={32} /></div>
+              <span className="text-[9px] font-black uppercase text-gray-400 tracking-widest max-w-[80px]">Aposentadoria Rural</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 text-center">
+              <div className="p-3 bg-blue-50 text-brand-blue rounded-2xl shadow-sm border border-blue-100"><Heart size={32} /></div>
+              <span className="text-[9px] font-black uppercase text-gray-400 tracking-widest max-w-[80px]">Auxílio Doença</span>
+            </div>
+          </div>
+
+          <div className="pt-6">
+            <button 
+              onClick={onCtaClick}
+              className="bg-gray-900 text-white px-8 py-5 rounded-3xl font-black text-xl flex items-center gap-4 hover:bg-black transition-all shadow-xl shadow-gray-200 group"
+            >
+              DESCUBRA SEUS DIREITOS! <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </div>
+
+        <div className="md:w-2/5 relative min-h-[300px] bg-brand-blue/5 overflow-hidden">
+          <img 
+            src="https://images.unsplash.com/photo-1594142484501-9ff96621316b?auto=format&fit=crop&q=60&w=800" 
+            alt="Mãe e filho simbolizando amor e cuidado" 
+            className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80"
+          />
+          <div className="absolute inset-0 bg-linear-to-l from-transparent via-white/20 to-white md:to-transparent" />
+          
+          <div className="absolute bottom-10 right-10 w-32 h-32 bg-brand-pink/90 backdrop-blur-md rounded-full border-4 border-white shadow-2xl flex flex-col items-center justify-center p-4 text-center">
+             <span className="text-[10px] font-black text-gray-900 uppercase leading-tight">MÃE, exemplo de amor!</span>
+             <div className="text-gray-900 mt-1"><Heart size={16} fill="currentColor" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 );
 
 export function LandingPage() {
@@ -312,10 +374,10 @@ export function LandingPage() {
       {/* Hero Section */}
       <header className="relative pt-16 pb-24 px-4 md:px-8 overflow-hidden">
         {/* Background Image Container */}
-        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 -z-10">
           <img 
-            src="https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&q=45&w=1000" 
-            alt="Casal de idosos felizes, simbolizando a segurança da aposentadoria." 
+            src="https://images.unsplash.com/photo-1621252179027-94459d278660?auto=format&fit=crop&q=45&w=1000" 
+            alt="Mãe sorrindo segurando um bebê feliz" 
             className="w-full h-full object-cover opacity-10"
           />
           <div className="absolute inset-0 bg-linear-to-r from-white via-white/80 to-transparent" />
@@ -337,21 +399,25 @@ export function LandingPage() {
             </div>
             
             <h1 className="text-4xl md:text-7xl font-black text-gray-900 leading-[1] md:leading-[0.95] tracking-tighter">
-              Garantimos o seu <span className="text-brand-blue">benefício</span> sem você sair de <span className="italic font-serif text-brand-blue">casa.</span>
+              VOCÊ SABIA QUE <span className="text-brand-blue">TEM DIREITO?</span> <div className="text-brand-pink text-3xl md:text-5xl mt-2">MÃE DESEMPREGADA</div>
             </h1>
             
             <p className="text-lg md:text-xl text-gray-600 font-medium leading-relaxed max-w-xl">
-              Somos especialistas em destravar processos no INSS. Você não paga nada se não aprovarmos seu benefício.
+              Mesmo sem ter trabalhado de carteira assinada, você pode ter direito ao SALÁRIO MATERNIDADE!
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-              <div className="flex items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm transition-all focus-within:ring-2 focus-within:ring-blue-100">
-                <div className="bg-blue-50 p-2 rounded-xl text-blue-600 shrink-0"><Clock size={20} /></div>
-                <span className="font-bold text-gray-700 text-sm">Agilidade no Processo</span>
+            <div className="grid grid-cols-1 gap-3 max-w-md">
+              <div className="flex items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm transition-all">
+                <div className="bg-blue-50 p-2 rounded-xl text-blue-600 shrink-0"><Lock size={20} /></div>
+                <span className="font-bold text-gray-700 text-sm italic">Nunca trabalhou com carteira assinada</span>
               </div>
-              <div className="flex items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm transition-all focus-within:ring-2 focus-within:ring-blue-100">
-                <div className="bg-green-50 p-2 rounded-xl text-green-600 shrink-0"><Lock size={20} /></div>
-                <span className="font-bold text-gray-700 text-sm">Dados 100% Protegidos</span>
+              <div className="flex items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm transition-all">
+                <div className="bg-pink-50 p-2 rounded-xl text-pink-600 shrink-0"><Heart size={20} /></div>
+                <span className="font-bold text-gray-700 text-sm italic">Sempre foi dona de casa</span>
+              </div>
+              <div className="flex items-center gap-3 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-sm transition-all">
+                <div className="bg-green-50 p-2 rounded-xl text-green-600 shrink-0"><CheckCircle2 size={20} /></div>
+                <span className="font-bold text-gray-700 text-sm italic">Tem direito ao benefício</span>
               </div>
             </div>
           </motion.div>
@@ -400,13 +466,15 @@ export function LandingPage() {
         </div>
       </div>
 
+      <PromotionalBanner onCtaClick={() => setShowWhatsAppModal(true)} />
+
       {/* Services Section */}
       <section id="beneficios" className="py-24 px-6 bg-white">
         <div className="max-w-6xl mx-auto space-y-16">
           <div className="text-center space-y-4">
-            <h2 className="text-4xl font-black text-gray-900 tracking-tight text-center">Especialistas no que você precisa</h2>
+            <h2 className="text-4xl font-black text-gray-900 tracking-tight text-center uppercase">VOCÊ PODE TER DIREITO A:</h2>
             <div className="bg-brand-pink/30 py-2 px-6 rounded-full inline-block mx-auto text-gray-900 font-bold text-sm">
-              Análise Profissional com Adilson Macrina
+              Análise Profissional com ADILSON MACRINA LEVADO
             </div>
           </div>
 
@@ -415,21 +483,21 @@ export function LandingPage() {
               {
                 title: "Auxílio-Maternidade",
                 desc: "Receba o salário maternidade rural ou urbano mesmo que nunca tenha trabalhado de carteira assinada. Atendemos mães de todo o Brasil.",
-                icon: <Heart className="text-pink-500" />,
+                icon: <Baby className="text-pink-500" size={28} />,
                 bg: "bg-pink-50",
                 border: "border-pink-100"
               },
               {
-                title: "Aposentadoria Rural",
+                title: "Aposentadoria Rural e Urbano",
                 desc: "Aposentadoria rural e urbana com agilidade. Garantimos o seu direito com foco total na transparência.",
-                icon: <CheckCircle2 className="text-green-500" />,
+                icon: <GraduationCap className="text-green-500" size={28} />,
                 bg: "bg-green-50",
                 border: "border-green-100"
               },
               {
-                title: "Auxílio Doença e LOAS",
+                title: "Auxílio Doença",
                 desc: "Especialistas em BPC/LOAS e auxílio doença. Assessoria completa para quem mais precisa de acolhimento.",
-                icon: <ShieldCheck className="text-brand-blue" />,
+                icon: <Stethoscope className="text-brand-blue" size={28} />,
                 bg: "bg-brand-blue/5",
                 border: "border-brand-blue/10"
               }
@@ -628,14 +696,18 @@ export function LandingPage() {
       </section>
 
       <section className="py-24 px-6 bg-brand-pink text-center space-y-10">
+        <div className="bg-gray-900 text-white px-6 py-2 rounded-full inline-block font-black text-sm uppercase tracking-widest mb-4">NÃO DEIXE DE RECEBER O QUE É SEU!</div>
         <h2 className="text-4xl md:text-5xl font-black text-gray-900 leading-tight">Entre em contato e descubra como receber.<br/><span className="text-gray-900/60 font-medium">Análise honesta e transparente.</span></h2>
         <button 
           onClick={() => setShowWhatsAppModal(true)}
-          className="inline-block bg-gray-900 text-white px-12 py-6 rounded-full font-black text-2xl shadow-2xl hover:bg-black transition-all transform active:scale-95 outline-none"
+          className="inline-block bg-gray-900 text-white px-12 py-6 rounded-full font-black text-2xl shadow-2xl hover:bg-black transition-all transform active:scale-95 outline-none uppercase tracking-tight"
         >
-          QUERO RECEBER MEU DIREITO
+          FALE CONOSCO VIA WHATSAPP
         </button>
-        <p className="text-gray-600 text-sm font-black uppercase tracking-widest">Adilson Macrina Levado • Especialista em Benefícios</p>
+        <div className="space-y-2">
+          <p className="text-gray-900 text-lg font-black uppercase tracking-widest">ADILSON MACRINA LEVADO</p>
+          <p className="text-gray-600 font-bold">@MACRINALEVADO</p>
+        </div>
       </section>
 
       {/* Footer */}
@@ -649,8 +721,19 @@ export function LandingPage() {
                 <CheckCircle2 size={10} /> Atendemos em todo o Brasil
               </div>
             </div>
-            <p className="text-gray-400 text-sm font-medium">Adilson Macrina Levado - Especialista em Benefícios Previdenciários.</p>
-            <div className="flex justify-center md:justify-start gap-4">
+            <p className="text-gray-400 text-sm font-medium">Informação, respeito e compromisso com seus direitos.</p>
+            <div className="space-y-4 pt-4">
+              <div className="flex items-center gap-3 text-gray-500 font-bold text-xs uppercase tracking-widest">
+                <div className="text-brand-blue"><HelpingHand size={18} /></div> PELOS QUE MAIS PRECISAM
+              </div>
+              <div className="flex items-center gap-3 text-gray-500 font-bold text-xs uppercase tracking-widest">
+                <div className="text-brand-blue"><ShieldCheck size={18} /></div> SEUS DIREITOS, NOSSO COMPROMISSO
+              </div>
+              <div className="flex items-center gap-3 text-gray-500 font-bold text-xs uppercase tracking-widest">
+                <div className="text-brand-blue"><Heart size={18} /></div> EMPATIA QUE TRANSFORMA
+              </div>
+            </div>
+            <div className="flex justify-center md:justify-start gap-4 pt-6">
               <button onClick={() => setShowWhatsAppModal(true)} className="text-green-500 hover:scale-110 transition-transform"><MessageCircle size={24} /></button>
               <a href="https://instagram.com" className="text-pink-500 hover:scale-110 transition-transform">
                 <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204 0-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>

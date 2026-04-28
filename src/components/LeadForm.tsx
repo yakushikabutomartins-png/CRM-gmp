@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PatternFormat } from 'react-number-format';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../lib/firebase';
-import { CheckCircle2, Send, Lock, ChevronDown, ArrowRight, Loader2, Info } from 'lucide-react';
+import { CheckCircle2, Lock, ChevronDown, ArrowRight, Loader2, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const BENEFIT_TYPES = [
