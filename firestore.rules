@@ -1,0 +1,61 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Lead Validation
+    function isValidLead(data) {
+      let requiredFields = ['name', 'phone', 'benefitType', 'status', 'createdAt', 'updatedAt'];
+      return data.keys().hasAll(requiredFields)
+        && data.keys().size() <= 10
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 200
+        && data.phone is string && data.phone.size() >= 8 && data.phone.size() <= 20
+        && data.benefitType is string && data.benefitType.size() > 0 && data.benefitType.size() <= 100
+        && data.status in ['novo', 'em_contato', 'concluido', 'arquivado']
+        && (data.get('source', 'website') in ['website', 'social_media', 'referral', 'google', 'outro'])
+        && data.createdAt == request.time
+        && data.updatedAt == request.time;
+    }
+
+    match /leads/{leadId} {
+      // Anyone can submit a lead
+      allow create: if isValidLead(incoming());
+
+      // Only authenticated users (consultants) can see and manage leads
+      allow read, update, delete: if isSignedIn();
+
+      // Specifically for updates, ensure timestamps and immutability where needed
+      allow update: if isSignedIn()
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && (
+          // Allow updating status, notes, or any other field as long as it's a valid lead
+          // For simplicity and because it's an internal CRM for the consultant, we trust the signed-in user
+          // But still validate the basic types
+          incoming().name is string
+          && incoming().phone is string
+          && incoming().status in ['novo', 'em_contato', 'concluido', 'arquivado']
+        );
+    }
+  }
+}

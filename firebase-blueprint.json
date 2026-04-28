@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "Lead": {
+      "title": "Lead",
+      "description": "Potencial cliente capturado via formulário.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Nome completo do lead."
+        },
+        "phone": {
+          "type": "string",
+          "description": "Telefone de contato (WhatsApp)."
+        },
+        "benefitType": {
+          "type": "string",
+          "description": "Tipo de benefício de interesse."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["novo", "em_contato", "concluido", "arquivado"],
+          "description": "Status atual do lead no funil de vendas."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Notas adicionais do consultor."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de criação do lead."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data da última atualização."
+        },
+        "reminderDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data agendada para follow-up."
+        },
+        "source": {
+          "type": "string",
+          "description": "Origem do lead (ex: website, redes sociais, indicação).",
+          "enum": ["website", "social_media", "referral", "outro"]
+        }
+      },
+      "required": ["name", "phone", "benefitType", "status", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Coleção de leads capturados."
+    }
+  }
+}
